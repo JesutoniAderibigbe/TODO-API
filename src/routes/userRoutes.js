@@ -8,7 +8,7 @@ router.get('/', userController.getUsers)
 router.post('/signup', userController.UserSignUp);
 router.post('/login', userController.UserLogin);
 router.get('/:email',authMiddleware, userController.findByEmail)
-router.post('/:email', userController.forgotPassword)
+router.delete('/:email', userController.deleteUser)
 
 
 module.exports = router;

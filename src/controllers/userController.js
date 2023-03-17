@@ -14,6 +14,7 @@ const JWT_SECRET = 'facebook';
 const { v4: uuidv4 } = require('uuid');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const e = require("express");
 
 
 
@@ -91,6 +92,7 @@ exports.UserLogin = async(req, res)=> {
        return res.status(404).json({message: "There is no user with such email"})
         }
         res.json(user);
+      await  User.save();
         
     } catch (error) {
         res.status(500).json({message: `There is ${error}`});
@@ -102,6 +104,23 @@ exports.UserLogin = async(req, res)=> {
 
   }
 
+
+  exports.deleteUser = async(req, res)=>{
+    try {
+      const user = await User.findOne({email: req.params.email})
+    if(!user){
+      res.status(400).json({message: "There is no such user with that email"})
+    }else{
+      res.status(200).json({message: "User deleted"})
+      res.json(user)
+    }
+      
+    } catch (error) {
+      res.status(404).json({message: "Check your server function"})
+      
+    }
+    
+  }
 
 
   
